@@ -47,29 +47,29 @@ ScriptsOnlyBuild:
     - Class: 104
       Script: {instanceID: 0}
     - Class: 114
-      Script: {instanceID: 11350}
+      Script: {instanceID: 11334}
     - Class: 114
-      Script: {instanceID: 11642}
+      Script: {instanceID: 11626}
     - Class: 114
-      Script: {instanceID: 11646}
+      Script: {instanceID: 11630}
     - Class: 114
-      Script: {instanceID: 11696}
+      Script: {instanceID: 11680}
     - Class: 114
-      Script: {instanceID: 12372}
+      Script: {instanceID: 12356}
     - Class: 114
-      Script: {instanceID: 12960}
+      Script: {instanceID: 12944}
     - Class: 114
-      Script: {instanceID: 13100}
+      Script: {instanceID: 13084}
     - Class: 114
-      Script: {instanceID: 13890}
+      Script: {instanceID: 13874}
     - Class: 114
-      Script: {instanceID: 13896}
+      Script: {instanceID: 13880}
     - Class: 114
-      Script: {instanceID: 14512}
+      Script: {instanceID: 14496}
     - Class: 114
-      Script: {instanceID: 14534}
+      Script: {instanceID: 14518}
     - Class: 114
-      Script: {instanceID: 14556}
+      Script: {instanceID: 14540}
     - Class: 115
       Script: {instanceID: 0}
     - Class: 128
@@ -473,7 +473,7 @@ ScriptsOnlyBuild:
     className: GraphicRaycaster
   - hash:
       serializedVersion: 2
-      Hash: 3f22bbbac54fb3fa3f9ccb10b2ae5008
+      Hash: e36e616fe71ffa0dc1fcdf08c0190faa
     assemblyName: Assembly-CSharp.dll
     namespaceName: 
     className: GameManager
@@ -594,4 +594,4 @@ ScriptsOnlyBuild:
   platform: 13
   scenePathNames:
   - Assets/Scenes/SampleScene.unity
-  playerPath: C:/Users/user/Desktop/The_Last_Survivor/TheLastSurvivor/test1.apk
+  playerPath: C:/Users/user/Desktop/The_Last_Survivor/TheLastSurvivor/test(22.01.17_01_28).apk
