@@ -5,16 +5,21 @@ using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
-
     public Image m_ProgBar_NightTime;
     public Text m_ProgBar_TestTxt;
     public Text m_Text_StageTxt;
     public Image m_ProgBar_DayTime;
+    public Button Btn_Next;
+    public Button GameStartButton;
 
     public GameObject m_objOnPlayCanvas; //수정(김상현)22.01.17 원코드 : private Canvas = Cvs_OnPlayCanvas;
     public GameObject m_objTitleCanvas;
     public GameObject m_objUpgradeCanvas;
     public GameObject m_objSettingCanvas;
+
+    public AudioSource[] m_NightSound; // 스테이지 시작 사운드 트랙
+    int soundTrackNum = 0;
+    int preTrackNum = 0;
 
     public float duration; // 낮/밤 지속시간(단위:초)
 
@@ -23,38 +28,15 @@ public class GameManager : MonoBehaviour
     const float PROGRESS_MAX = 1.0f; // 프로그래스 바 게이지 최대치(100%)
     const float PROGRESS_MIN = 0.0f;
 
-    private void ChangeStage()
-    {
-        numberOfStage++;
-        m_objUpgradeCanvas.SetActive(true);
-        m_objOnPlayCanvas.gameObject.SetActive(false);
-    }
-    private void OnPlayCanvas_EnableChanged()
-    { // 게임 플레이 화면 활성화여부가 갱신 될 경우, 게이지 초기화(아직 미적용22.01.15)
-        if (m_objTitleCanvas.activeSelf == true) // 타이틀캔버스가 켜진다 = 게임종료 = 게임시간이 초기화 되어야함(22.01.17)
-        {
-            m_ProgBar_NightTime.fillAmount = PROGRESS_MAX;
-            m_ProgBar_TestTxt.text = duration + "s"; // 테스트用임. 나중에 지울것(변상현)
-            numberOfStage = 1;
-        }
-        else if(m_objUpgradeCanvas.activeSelf == true)
-        {
-            m_ProgBar_NightTime.fillAmount = PROGRESS_MAX;
-            m_ProgBar_TestTxt.text = duration + "s";
-        }
-        if (m_objSettingCanvas.activeSelf == true)  // 게임중 셋팅창이켜지면 시간이 흐르면 안됨.
-        {
-            Time.timeScale = 0;
-        }
-        else Time.timeScale = 1;
-
-    }
     void Start()
     {
         Canvas Cvs_OnPlayCanvas = m_objOnPlayCanvas.GetComponent<Canvas>();       // 수정(김상현)22.01.17 원코드 : Cvs_OnPlayCanvas = GetComponent<Canvas>();
         m_ProgBar_NightTime.fillAmount = PROGRESS_MAX;
         #region 테스트用임. 나중에 지울것(변상현)
         m_ProgBar_TestTxt.text = duration + "s";
+
+        Btn_Next.onClick.AddListener(SoundTrackPlay); // 스테이지 시작 시 사운드트랙 재생
+        GameStartButton.onClick.AddListener(SoundTrackPlay);
         #endregion
 
     }
@@ -78,7 +60,44 @@ public class GameManager : MonoBehaviour
             m_ProgBar_TestTxt.text = numberOfTime + "s";
             #endregion
         }
-    
+
         OnPlayCanvas_EnableChanged();
     }
+
+    private void ChangeStage()
+    {
+        numberOfStage++;
+        m_objUpgradeCanvas.SetActive(true);
+        m_objOnPlayCanvas.gameObject.SetActive(false);
+    }
+
+    public void SoundTrackPlay()
+    { // 스테이지 시작 효과음 재생 및 변경
+        m_NightSound[preTrackNum].enabled = false;
+        m_NightSound[soundTrackNum].enabled = true;
+        preTrackNum = soundTrackNum;
+        soundTrackNum = (soundTrackNum < m_NightSound.Length - 1) ? (soundTrackNum + 1) : 0;
+    }
+
+    private void OnPlayCanvas_EnableChanged()
+    { // 게임 플레이 화면 활성화여부가 갱신 될 경우, 게이지 초기화(아직 미적용22.01.15)
+        if (m_objTitleCanvas.activeSelf == true) // 타이틀캔버스가 켜진다 = 게임종료 = 게임시간이 초기화 되어야함(22.01.17)
+        {
+            m_ProgBar_NightTime.fillAmount = PROGRESS_MAX;
+            m_ProgBar_TestTxt.text = duration + "s"; // 테스트用임. 나중에 지울것(변상현)
+            numberOfStage = 1;
+        }
+        else if (m_objUpgradeCanvas.activeSelf == true)
+        {
+            m_ProgBar_NightTime.fillAmount = PROGRESS_MAX;
+            m_ProgBar_TestTxt.text = duration + "s";
+        }
+        if (m_objSettingCanvas.activeSelf == true)  // 게임중 셋팅창이켜지면 시간이 흐르면 안됨.
+        {
+            Time.timeScale = 0;
+        }
+        else Time.timeScale = 1;
+
+    }
+
 }
