@@ -11,27 +11,26 @@ public class Granade : MonoBehaviour
     public GameObject m_objGrenade;
 
     public int m_nDamage;
-    public int m_nCount;
-    
-    Vector2 MousePosition;
-    public Camera camera;
+    public int m_nCount = 3;
 
-    public void SetGrenadeOn()
+    public bool m_bGrenade = false;
+
+   
+    public void OnMouseDrag()
     {
-        if(m_objGrenadeOnBtn.activeSelf == false)
+        if (m_objGrenadeOffBtn.activeSelf == true)
         {
-            m_objGrenade.transform.position = m_objTempShelter.transform.position;
+            
+            Vector3 mouseposition = new Vector3(Input.mousePosition.x, Input.mousePosition.y);
+            Vector3 objposition = Camera.main.ScreenToWorldPoint(mouseposition);
+            transform.position = objposition;
         }
     }
-    public void MouseLocate()
-    {
-
-    }
-  
+   
 
     void Update()
     {
-        SetGrenadeOn();
+
 
     }
 }
