@@ -32,6 +32,9 @@ public class GameManager : MonoBehaviour
     public GameObject m_objTitleCanvas;
     public GameObject m_objUpgradeCanvas;
     public GameObject m_objSetupCanvas;
+    public GameObject m_objGranade;
+    public GameObject m_objGrenadeOnBtn;
+    public GameObject m_objGrenadeOffBtn;
 
     public float stageDuration; // 낮/밤 지속시간(단위:초)
     private int numberOfTime; // 몇 초 지났는지 int형으로 저장.
@@ -47,6 +50,18 @@ public class GameManager : MonoBehaviour
     public AudioSource m_BackgroundMusic; // 배경음
     int soundTrackNum = 0;
     int preTrackNum = 0;
+
+    public int m_nGranadecount;
+
+    public void SetGranade()
+    {
+        m_nGranadecount = m_objGranade.GetComponent<Granade>().GetCount();
+        if (m_nGranadecount <= 0)
+        {
+            m_objGrenadeOnBtn.SetActive(false);
+            m_objGrenadeOffBtn.SetActive(true);
+        }
+    }
 
     void Start()
     {
@@ -83,6 +98,7 @@ public class GameManager : MonoBehaviour
             #endregion
         }
         OnPlayCanvas_EnableChanged();
+        SetGranade();
 
     }
 
@@ -90,7 +106,9 @@ public class GameManager : MonoBehaviour
     {
         numberOfStage++;
         m_objUpgradeCanvas.SetActive(true);
-        //m_objOnPlayCanvas.gameObject.SetActive(false);
+        m_objGranade.GetComponent<Granade>().SetCount(3);
+        m_objGrenadeOnBtn.SetActive(true);
+        m_objGrenadeOffBtn.SetActive(false);
 
     }
 
